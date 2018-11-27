@@ -1,24 +1,14 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "svpng.inc"
-// http://cimg.eu/
-//#include <string>
-//#include <fstream>
-//#include <iostream>
-//#include <cstdio>
-//#include <vector>
-//#include <sys/stat.h> // для создания папки
-//#include <sys/types.h> // для создания папки
 
-const int screensize[2] = {600,600}; // so we will have array 600*600
+const int screensize[2] = {600,600};
 const double scale = 250.;
 const double center[2] = {-0.7,0};
 const int iterations = 767;
 
 int main(int argc, char* argv[]){
-    //std::ios_base::sync_with_stdio(false);
 
-    // create massiv of unsigned char
     unsigned char picture[screensize[0]*screensize[1]*3], *pic = picture;
 
     for (int y = 0; y < screensize[1]; y++) 
@@ -34,10 +24,7 @@ int main(int argc, char* argv[]){
 
             for (n; n < iterations; n++ )
             {
-                if (pos_[0]*pos_[0]+pos_[1]*pos_[1] > 4) 
-                {
-                    break;
-                }
+                if (pos_[0]*pos_[0]+pos_[1]*pos_[1] > 4)  break;
 
                 pos_new[0] = pos_[0]*pos_[0] - pos_[1]*pos_[1] + constant[0];
                 pos_new[1] = 2*pos_[0]*pos_[1] + constant[1];
@@ -45,20 +32,18 @@ int main(int argc, char* argv[]){
                 pos_[0] = pos_new[0];
                 pos_[1] = pos_new[1];
             }
-            
-            // Вот тут понять
+
             unsigned char R = 255; unsigned char G = 255; unsigned char B = n - 511; 
             if (n < 512) {G = n - 256; B = 0; };
             if (n < 256) {R = n; G = 0; B = 0; };
-            *pic++ = (unsigned char)R;
-            *pic++ = (unsigned char)G;    
-            *pic++ = (unsigned char)B;            
+            *pic++ = R;
+            *pic++ = G;    
+            *pic++ = B;            
 
         }
     }
-    // Тут должно быть создание картинки
     FILE *fp = fopen("mandelbort.png", "wb");
-    svpng(fp, 256, 256, picture, 0);
+    svpng(fp, screensize[0], screensize[1], picture, 0);
     fclose(fp);
     return 0;
 }
