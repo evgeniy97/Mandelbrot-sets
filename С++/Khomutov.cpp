@@ -49,10 +49,10 @@ int main(int argc, char* argv[]){
             // Вот тут понять
             unsigned char R = 255; unsigned char G = 255; unsigned char B = n - 511; 
             if (n < 512) {G = n - 256; B = 0; };
-            if (n < 256) {R = n;G = 0; B = 0; };
-            *pic++ = (unsigned char)x;    /* R */
-            *pic++ = (unsigned char)y;    /* G */
-            *pic++ = 128;             
+            if (n < 256) {R = n; G = 0; B = 0; };
+            *pic++ = (unsigned char)R;
+            *pic++ = (unsigned char)G;    
+            *pic++ = (unsigned char)B;            
 
         }
     }
