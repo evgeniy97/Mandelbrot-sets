@@ -19,7 +19,7 @@ int main(int argc, char* argv[]){
     //std::ios_base::sync_with_stdio(false);
 
     // create massiv of unsigned char
-    unsigned char picture[screensize[0]*[screensize[1] *3], *pic = picture;
+    unsigned char picture[screensize[0]*screensize[1]*3], *pic = picture;
 
     for (int y = 0; y < screensize[1]; y++) 
     {
@@ -45,14 +45,14 @@ int main(int argc, char* argv[]){
                 pos_[0] = pos_new[0];
                 pos_[1] = pos_new[1];
             }
-
+            
             // Вот тут понять
-            //row[x] = {255,255,unsigned(n - 511)};
-            //if (n < 512) row[x] = {255,unsigned(n - 255),0};
-            //if (n < 256) row[x] =  {unsigned(n),0,0};
-            *p++ = (unsigned char)x;    /* R */
-            *p++ = (unsigned char)y;    /* G */
-            *p++ = 128;             
+            unsigned char R = 255; unsigned char G = 255; unsigned char B = n - 511; 
+            if (n < 512) {G = n - 256; B = 0; };
+            if (n < 256) {R = n;G = 0; B = 0; };
+            *pic++ = (unsigned char)x;    /* R */
+            *pic++ = (unsigned char)y;    /* G */
+            *pic++ = 128;             
 
         }
     }
