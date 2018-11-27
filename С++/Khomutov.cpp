@@ -1,30 +1,22 @@
 #include "stdio.h"
 #include "stdlib.h"
-#include <string>
-#include <fstream>
-#include <iostream>
+//#include <string>
+//#include <fstream>
+//#include <iostream>
 #include <cstdio>
-#include <vector>
+//#include <vector>
 
-#include <sys/stat.h> // для создания папки
-#include <sys/types.h> // для создания папки
+//#include <sys/stat.h> // для создания папки
+//#include <sys/types.h> // для создания папки
 
 const int screensize[2] = {600,600}; // so we will have array 600*600
 const double scale = 250.;
 const double center[2] = {-0.7,0};
-const int iterations = 767; // 767 to large
-const double colour[3] = {0.2,0.6,1};
-
-//auto give_color(const int n)
-//{
-//    if (n < 256) return {unsigned(n),0,0};
-//    if (n < 512) return {255,unsigned(n - 255),0};
-//    return {255,255,unsigned(n - 511)};
-//}
+const int iterations = 767;
 
 int main(int argc, char* argv[]){
-    std::ios_base::sync_with_stdio(false);
-    mkdir("result");
+    //std::ios_base::sync_with_stdio(false);
+
     // create 3d massiv of unsigned char
     unsigned char picture[screensize[0]][screensize[1]][3];
 
