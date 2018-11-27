@@ -1,11 +1,12 @@
 #include "stdio.h"
 #include "stdlib.h"
+#include "svpng.inc"
+// http://cimg.eu/
 //#include <string>
 //#include <fstream>
 //#include <iostream>
-#include <cstdio>
+//#include <cstdio>
 //#include <vector>
-
 //#include <sys/stat.h> // для создания папки
 //#include <sys/types.h> // для создания папки
 
@@ -17,12 +18,11 @@ const int iterations = 767;
 int main(int argc, char* argv[]){
     //std::ios_base::sync_with_stdio(false);
 
-    // create 3d massiv of unsigned char
-    unsigned char picture[screensize[0]][screensize[1]][3];
+    // create massiv of unsigned char
+    unsigned char picture[screensize[0]*[screensize[1] *3], *pic = picture;
 
     for (int y = 0; y < screensize[1]; y++) 
     {
-        unsigned char row[screensize[0]][3];
         for (int x = 0; x < screensize[0];x++)
         {
             double constant[2] = {(x-screensize[0]/2)/scale+center[0],
@@ -50,10 +50,15 @@ int main(int argc, char* argv[]){
             //row[x] = {255,255,unsigned(n - 511)};
             //if (n < 512) row[x] = {255,unsigned(n - 255),0};
             //if (n < 256) row[x] =  {unsigned(n),0,0};
+            *p++ = (unsigned char)x;    /* R */
+            *p++ = (unsigned char)y;    /* G */
+            *p++ = 128;             
 
         }
-        // Тут добавление в picture row в заданное место
     }
     // Тут должно быть создание картинки
+    FILE *fp = fopen("mandelbort.png", "wb");
+    svpng(fp, 256, 256, picture, 0);
+    fclose(fp);
     return 0;
 }
