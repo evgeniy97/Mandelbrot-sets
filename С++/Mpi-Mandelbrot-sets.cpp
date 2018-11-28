@@ -10,7 +10,7 @@ const int iterations = 767;
 
 int main(int argc, char* argv[]){
 
-    unsigned char picture[screensize[0]*screensize[1]*3], *pic = picture;
+    unsigned char picture[screensize[0]*screensize[1]*3];
 
     int Ranks;
     int myRank;
@@ -20,7 +20,7 @@ int main(int argc, char* argv[]){
 
     const int number_to_calculate = screensize[0] / Ranks; 
 
-    pic = myRank * screensize[0]*3 - 1; // Наверное надо миус 1
+    unsigned char *pic = &picture[myRank * screensize[0]*3 - 1];  //(myRank * screensize[0]*3 - 1); // Наверное надо миус 1
 
     // Use myRank to get number of Process
     for (int y = myRank * number_to_calculate ; y < (myRank + 1)* number_to_calculate; y++) // Нужно получить количестово процессов, тогда сможем рассчитать сколько делает каждый
