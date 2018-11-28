@@ -51,7 +51,7 @@ int main(int argc, char* argv[]){
     }
 
     MPI_Barrier(MPI_COMM_WORLD);
-	MPI_Finalize();
+    MPI_Finalize();
 
     FILE *fp = fopen("mandelbort.png", "wb");
     svpng(fp, screensize[0], screensize[1], picture, 0);
