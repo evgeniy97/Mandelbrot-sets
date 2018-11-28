@@ -19,13 +19,11 @@ int main(int argc, char* argv[]){
     MPI_Comm_rank(MPI_COMM_WORLD, &myRank); 
 
     const int number_to_calculate = screensize[1] / Ranks; 
-
-    unsigned char *pic = &picture[myRank*number_to_calculate *3 - 1];  //(myRank * screensize[0]*3 - 1); // Наверное надо миус 1
+    unsigned char part_picture[screensize[0]*number_to_calculate*3], *pic = part_picture;
 
     // Use myRank to get number of Process
     for (int y = myRank * number_to_calculate ; y < (myRank + 1)* number_to_calculate; y++) // Нужно получить количестово процессов, тогда сможем рассчитать сколько делает каждый
     {
-        // ВАЖНО: сместить указатель для каждого из процессов
         for (int x = 0; x < screensize[0];x++)
         {
             double constant[2] = {(x-screensize[0]/2)/scale+center[0],
@@ -54,11 +52,19 @@ int main(int argc, char* argv[]){
         }
     }
 
-    MPI_Barrier(MPI_COMM_WORLD);
-    MPI_Finalize();
+    // http://rsusu1.rnd.runnet.ru/tutor/method/m2/page10.html
+    MPI_Gather(part_picture,number_to_calculate*screensize[0]*3,MPI_UNSIGNED_CHAR,picture,
+    number_to_calculate*screensize[0]*3,MPI_UNSIGNED_CHAR,0,MPI_COMM_WORLD);
 
+    if (myRank == 0)
+    {
     FILE *fp = fopen("mandelbort.png", "wb");
     svpng(fp, screensize[0], screensize[1], picture, 0);
     fclose(fp);
+    }
+
+    MPI_Barrier(MPI_COMM_WORLD);
+    MPI_Finalize();
+
     return 0;
 }
