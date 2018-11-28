@@ -13,10 +13,10 @@ int main(int argc, char* argv[]){
     unsigned char picture[screensize[0]*screensize[1]*3], *pic = picture;
 
     int Ranks;
-	int myRank;
-	MPI_Init(&argc, &argv);
-	MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
-	MPI_Comm_size(MPI_COMM_WORLD, &Ranks);
+    int myRank;
+    MPI_Init(&argc, &argv);
+    MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
+    MPI_Comm_size(MPI_COMM_WORLD, &Ranks);
 
     // Use myRank to get number of Process
     for (int y = 0; y < screensize[1]; y++) // Нужно получить количестово процессов, тогда сможем рассчитать сколько делает каждый
