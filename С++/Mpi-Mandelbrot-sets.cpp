@@ -15,11 +15,15 @@ int main(int argc, char* argv[]){
     int Ranks;
     int myRank;
     MPI_Init(&argc, &argv);
-    MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
-    MPI_Comm_size(MPI_COMM_WORLD, &Ranks);
+    MPI_Comm_size(MPI_COMM_WORLD, &Ranks); // Find number of processes
+    MPI_Comm_rank(MPI_COMM_WORLD, &myRank); 
+
+    const int number_to_calculate = screensize[0] / Ranks; 
+
+    pic = myRank * screensize[0]*3 - 1; // Наверное надо миус 1
 
     // Use myRank to get number of Process
-    for (int y = 0; y < screensize[1]; y++) // Нужно получить количестово процессов, тогда сможем рассчитать сколько делает каждый
+    for (int y = myRank * number_to_calculate ; y < (myRank + 1)* number_to_calculate; y++) // Нужно получить количестово процессов, тогда сможем рассчитать сколько делает каждый
     {
         // ВАЖНО: сместить указатель для каждого из процессов
         for (int x = 0; x < screensize[0];x++)
