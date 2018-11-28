@@ -18,9 +18,9 @@ int main(int argc, char* argv[]){
     MPI_Comm_size(MPI_COMM_WORLD, &Ranks); // Find number of processes
     MPI_Comm_rank(MPI_COMM_WORLD, &myRank); 
 
-    const int number_to_calculate = screensize[0] / Ranks; 
+    const int number_to_calculate = screensize[1] / Ranks; 
 
-    unsigned char *pic = &picture[myRank * screensize[0]*3 - 1];  //(myRank * screensize[0]*3 - 1); // Наверное надо миус 1
+    unsigned char *pic = &picture[myRank*number_to_calculate *3 - 1];  //(myRank * screensize[0]*3 - 1); // Наверное надо миус 1
 
     // Use myRank to get number of Process
     for (int y = myRank * number_to_calculate ; y < (myRank + 1)* number_to_calculate; y++) // Нужно получить количестово процессов, тогда сможем рассчитать сколько делает каждый
