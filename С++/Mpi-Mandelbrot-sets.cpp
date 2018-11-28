@@ -1,9 +1,10 @@
 #include "stdio.h"
 #include "stdlib.h"
+#include "mpi.h"
 #include "svpng.inc"
 
-const int screensize[2] = {600,600};
-const double scale = 250.;
+const int screensize[2] = {1200,1200};
+const double scale = 500.;
 const double center[2] = {-0.7,0};
 const int iterations = 767;
 
@@ -11,8 +12,16 @@ int main(int argc, char* argv[]){
 
     unsigned char picture[screensize[0]*screensize[1]*3], *pic = picture;
 
-    for (int y = 0; y < screensize[1]; y++) 
+    int Ranks;
+	int myRank;
+	MPI_Init(&argc, &argv);
+	MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
+	MPI_Comm_size(MPI_COMM_WORLD, &Ranks);
+
+    // Use myRank to get number of Process
+    for (int y = 0; y < screensize[1]; y++) // Нужно получить количестово процессов, тогда сможем рассчитать сколько делает каждый
     {
+        // ВАЖНО: сместить указатель для каждого из процессов
         for (int x = 0; x < screensize[0];x++)
         {
             double constant[2] = {(x-screensize[0]/2)/scale+center[0],
@@ -29,8 +38,7 @@ int main(int argc, char* argv[]){
                 pos_new[0] = pos_[0]*pos_[0] - pos_[1]*pos_[1] + constant[0];
                 pos_new[1] = 2*pos_[0]*pos_[1] + constant[1];
 
-                pos_[0] = pos_new[0];
-                pos_[1] = pos_new[1];
+                pos_[0] = pos_new[0]; pos_[1] = pos_new[1];
             }
 
             unsigned char R = 255; unsigned char G = 255; unsigned char B = n - 511; 
@@ -39,9 +47,12 @@ int main(int argc, char* argv[]){
             *pic++ = R;
             *pic++ = G;    
             *pic++ = B;            
-
         }
     }
+
+    MPI_Barrier(MPI_COMM_WORLD);
+	MPI_Finalize();
+
     FILE *fp = fopen("mandelbort.png", "wb");
     svpng(fp, screensize[0], screensize[1], picture, 0);
     fclose(fp);

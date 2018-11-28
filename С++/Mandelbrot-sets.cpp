@@ -2,8 +2,8 @@
 #include "stdlib.h"
 #include "svpng.inc"
 
-const int screensize[2] = {600,600};
-const double scale = 250.;
+const int screensize[2] = {1200,1200};
+const double scale = 500.;
 const double center[2] = {-0.7,0};
 const int iterations = 767;
 
