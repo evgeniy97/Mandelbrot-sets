@@ -1,6 +1,7 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "svpng.inc"
+#include <omp.h>
 
 const int screensize[2] = {1200,1200};
 const double scale = 500.;
@@ -11,9 +12,14 @@ int main(int argc, char* argv[]){
 
     unsigned char picture[screensize[0]*screensize[1]*3];
 
-    #pragma omp for schedule(dynamic) // shared(picture) private(pic,x) num_threads(5)
+    omp_set_num_threads(5);
+    #pragma omp for schedule(dynamic)
     for (int y = 0; y < screensize[1]; y++)
     {
+
+        int tid = omp_get_thread_num();
+        printf("Hello world from omp thread %d\n", tid);
+
         unsigned char *pic = picture + y*screensize[0]*3;
         for (int x = 0; x < screensize[0];x++)
         {
