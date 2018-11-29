@@ -12,13 +12,21 @@ int main(int argc, char* argv[]){
 
     unsigned char picture[screensize[0]*screensize[1]*3];
 
+    omp_set_dynamic(0);
     omp_set_num_threads(5);
-    #pragma omp for schedule(dynamic)
+
+    int num = omp_get_num_threads();
+    printf("Hello world from omp thread %d\n", num);
+
+    //#pragma omp for schedule(dynamic,5)
+    #pragma omp parallel num_threads(3)
+    {
+    #pragma omp for
     for (int y = 0; y < screensize[1]; y++)
     {
 
         int tid = omp_get_thread_num();
-        printf("Hello world from omp thread %d\n", tid);
+        //printf("Hello world from omp thread %d\n", tid);
 
         unsigned char *pic = picture + y*screensize[0]*3;
         for (int x = 0; x < screensize[0];x++)
@@ -48,7 +56,7 @@ int main(int argc, char* argv[]){
             *pic++ = B;            
         }
     }
-
+    }
     FILE *fp = fopen("mandelbort.png", "wb");
     svpng(fp, screensize[0], screensize[1], picture, 0);
     fclose(fp);
