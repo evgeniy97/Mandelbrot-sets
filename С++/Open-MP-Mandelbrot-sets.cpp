@@ -11,7 +11,7 @@ int main(int argc, char* argv[]){
 
     unsigned char picture[screensize[0]*screensize[1]*3];
 
-    #pragma omp for schedule(dynamic) shared(picture) private(pic,x) num_threads(5)
+    #pragma omp for schedule(dynamic) // shared(picture) private(pic,x) num_threads(5)
     for (int y = 0; y < screensize[1]; y++)
     {
         unsigned char *pic = picture + y*screensize[0]*3;
