@@ -13,19 +13,14 @@ int main(int argc, char* argv[]){
     unsigned char picture[screensize[0]*screensize[1]*3];
 
     omp_set_dynamic(0);
-    omp_set_num_threads(5);
-
-    int num = omp_get_num_threads();
-    printf("Hello world from omp thread %d\n", num);
-
-    //#pragma omp for schedule(dynamic,5)
-    #pragma omp parallel num_threads(3)
+    //omp_set_num_threads(5); Sounds good, doesnot work
+    #pragma omp parallel num_threads(5)
     {
     #pragma omp for
     for (int y = 0; y < screensize[1]; y++)
     {
 
-        int tid = omp_get_thread_num();
+        //int tid = omp_get_thread_num();
         //printf("Hello world from omp thread %d\n", tid);
 
         unsigned char *pic = picture + y*screensize[0]*3;
