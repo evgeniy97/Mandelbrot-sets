@@ -22,7 +22,7 @@ int main(int argc, char* argv[]){
     const int number_to_calculate = screensize[1] / Ranks; 
     unsigned char part_picture[screensize[0]*number_to_calculate*3];
 
-    for (int y = 0; y < number_to_calculate; y++)
+    for (int y = myRank * number_to_calculate ; y < (myRank + 1)* number_to_calculate; y++)
     {
 
         #pragma omp parallel num_threads(2)
