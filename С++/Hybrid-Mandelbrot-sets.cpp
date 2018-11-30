@@ -2,7 +2,7 @@
 #include "stdlib.h"
 #include "svpng.inc"
 #include "mpi.h"
-//#include <omp.h>
+#include <omp.h>
 
 const int screensize[2] = {1200,1200};
 const double scale = 500.;
@@ -22,19 +22,19 @@ int main(int argc, char* argv[]){
     const int number_to_calculate = screensize[1] / Ranks; 
     unsigned char part_picture[screensize[0]*number_to_calculate*3];
 
-    for (int y = myRank * number_to_calculate ; y < (myRank + 1)* number_to_calculate; y++)
+    for (int y = 0 ; y < number_to_calculate; y++)
     {
 
         #pragma omp parallel num_threads(2)
         {
         //int tid = omp_get_thread_num();
         //printf("Hello world from omp thread %d of %d\n", tid,myRank);
-        unsigned char *pic = part_picture + y*screensize[0]*3; // надо смещать по x
+        //unsigned char *pic = part_picture + y*screensize[0]*3; // надо смещать по x
         #pragma omp for
         for (int x = 0; x < screensize[0];x++)
         {
             double constant[2] = {(x-screensize[0]/2)/scale+center[0],
-            (y-screensize[1]/2)/scale-center[1]}; 
+            (y + myRank * number_to_calculate - screensize[1]/2)/scale-center[1]}; 
 
             double pos_[2] = {0.,0.} ;
             double pos_new[2] = {0.,0.};
@@ -60,6 +60,8 @@ int main(int argc, char* argv[]){
         }
         }
     }
+    //printf("I am fucking procces %d. I am sending message\n",myRank);
+    MPI_Barrier(MPI_COMM_WORLD);
 
     MPI_Gather(part_picture,number_to_calculate*screensize[0]*3,MPI_UNSIGNED_CHAR,picture,
     number_to_calculate*screensize[0]*3,MPI_UNSIGNED_CHAR,0,MPI_COMM_WORLD);
