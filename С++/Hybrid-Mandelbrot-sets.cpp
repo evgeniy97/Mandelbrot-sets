@@ -29,7 +29,6 @@ int main(int argc, char* argv[]){
         {
         //int tid = omp_get_thread_num();
         //printf("Hello world from omp thread %d of %d\n", tid,myRank);
-        //unsigned char *pic = part_picture + y*screensize[0]*3; // надо смещать по x
         #pragma omp for
         for (int x = 0; x < screensize[0];x++)
         {
