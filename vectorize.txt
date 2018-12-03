@@ -1,0 +1,42 @@
+
+Analyzing loop at svpng.inc:107
+
+Analyzing loop at svpng.inc:98
+
+Analyzing loop at svpng.inc:102
+
+Analyzing loop at svpng.inc:97
+
+Analyzing loop at svpng.inc:96
+
+Analyzing loop at svpng.inc:94
+
+Analyzing loop at svpng.inc:91
+
+Analyzing loop at svpng.inc:90
+
+svpng.inc:77: note: vectorized 0 loops in function.
+
+svpng.inc:97: note: Completely unroll loop 1 times
+
+svpng.inc:107: note: Turned loop into non-loop; it never loops.
+
+svpng.inc:96: note: Turned loop into non-loop; it never loops.
+
+svpng.inc:94: note: Turned loop into non-loop; it never loops.
+
+svpng.inc:91: note: Turned loop into non-loop; it never loops.
+
+svpng.inc:90: note: Turned loop into non-loop; it never loops.
+
+svpng.inc:102: note: Unroll loop 1 times
+
+Analyzing loop at Mandelbrot-sets.cpp:14
+
+Analyzing loop at Mandelbrot-sets.cpp:16
+
+Analyzing loop at Mandelbrot-sets.cpp:29
+
+Mandelbrot-sets.cpp:10: note: vectorized 0 loops in function.
+
+Mandelbrot-sets.cpp:25: note: Unroll loop 4 times
