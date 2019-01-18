@@ -12,7 +12,7 @@ int main(int argc, char* argv[]){
 
     double t1, t2;
 
-    t1 = MPI_Wtime()();
+    t1 = MPI_Wtime();
 
     unsigned char picture[screensize[0]*screensize[1]*3];
 
