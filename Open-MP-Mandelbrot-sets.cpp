@@ -10,6 +10,10 @@ const int iterations = 767;
 
 int main(int argc, char* argv[]){
 
+    double t1, t2;
+
+    t1 = omp_get_wtime();
+
     unsigned char picture[screensize[0]*screensize[1]*3];
 
     omp_set_dynamic(0);
@@ -55,5 +59,10 @@ int main(int argc, char* argv[]){
     FILE *fp = fopen("mandelbort.png", "wb");
     svpng(fp, screensize[0], screensize[1], picture, 0);
     fclose(fp);
+
+    t2 = omp_get_wtime();
+    printf("%e\n", t2-t1);
+
+
     return 0;
 }

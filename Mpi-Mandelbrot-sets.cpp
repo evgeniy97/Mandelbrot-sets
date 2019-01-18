@@ -10,6 +10,10 @@ const int iterations = 767;
 
 int main(int argc, char* argv[]){
 
+    double t1, t2;
+
+    t1 = MPI_Wtime()();
+
     unsigned char picture[screensize[0]*screensize[1]*3];
 
     int Ranks;
@@ -65,6 +69,9 @@ int main(int argc, char* argv[]){
 
     MPI_Barrier(MPI_COMM_WORLD);
     MPI_Finalize();
+
+    t2 = MPI_Wtime();
+    printf("%e\n", t2-t1);
 
     return 0;
 }
